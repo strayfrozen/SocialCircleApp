@@ -13,18 +13,12 @@ const thoughtSchema = new Schema(
         default: Date.now,
         get: createdAtVal => dateFormat(createdAtVal)
       },
-      thoughts: {
+      username: {
         type: String,
         required: true,
-        enum: ['', 'Sad', 'Mad', 'Excited', 'Happy'],
-        default: 'Happy'
       },
-      friends: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'Thought'
-        }
-      ]
+      reactions:[reactionSchema]
+       
     },
     {
       toJSON: {

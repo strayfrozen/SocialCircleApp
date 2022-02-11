@@ -6,27 +6,28 @@ const userSchema = new Schema(
         type: String,
         required: true,
         trim: true,
-        //Unique
+        unique:true
       },
       email: {
         type: String,
         required: true,
         trim: true,
-        //Unique
+        unique:true
       },
-      thoughts: {
-        type: String,
-        required: true,
-        enum: ['', 'Sad', 'Mad', 'Excited', 'Happy'],
-        default: 'Happy'
-      },
+      thoughts:  [
+          {
+            type: Schema.Types.ObjectId,
+            ref: 'Thought'
+          }
+        ],
       friends: [
         {
           type: Schema.Types.ObjectId,
-          ref: 'Thought'
+          ref: 'User'
         }
       ]
     },
+
     {
       toJSON: {
         virtuals: true,
@@ -35,3 +36,10 @@ const userSchema = new Schema(
       id: false
     }
   );
+
+  userSchema.virtual('friendCount').get(function() {
+    return this.friends.length;
+  })
+  
+  const User = model('User', userSchema)
+  module.exports = User;

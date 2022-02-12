@@ -1,14 +1,14 @@
 const { User, Thought } = require("../models")
 
 const thoughtController = {
-
+    //get all
     getThoughts(req, res) {
         Thought.find()
             .then((thoughtData) => {
                 res.json(thoughtData)
             })
     },
-
+    //get by id
     getSingleThought(req, res) {
         Thought.findOne({
             _id: req.params.thoughtId,

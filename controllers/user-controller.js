@@ -42,8 +42,8 @@ const userController = {
             .catch(err => res.status(400).json(err));
     },
 
-     // delete User
-     deleteUser({ params }, res) {
+    // delete User
+    deleteUser({ params }, res) {
         User.findOneAndDelete({ _id: params.id })
             .then(userData => {
                 if (!userData) {
@@ -53,6 +53,38 @@ const userController = {
                 res.json(userData);
             })
             .catch(err => res.status(400).json(err));
+    },
+
+    // add friend to user
+    addFriend({ params, body }, res) {
+        console.log(body);
+        User.create(body)
+            .then(({ _id }) => {
+                return User.findOneAndUpdate(
+                    { _id: params.friendId },
+                    { $push: { friends: _id } },
+                    { new: true }
+                );
+            })
+            .then(userData => {
+                if (!userData) {
+                    res.status(404).json({ message: 'No friend found with this id!' });
+                    return;
+                }
+                res.json(userData);
+            })
+            .catch(err => res.json(err));
+    },
+
+    // remove reply
+    removeFriend({ params }, res) {
+        User.findOneAndUpdate(
+            { _id: params.userId },
+            { $pull: { friends: { friendId: params.friendId } } },
+            { new: true }
+        )
+            .then(userData => res.json(userData))
+            .catch(err => res.json(err));
     }
 
 

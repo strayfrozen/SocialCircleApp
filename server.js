@@ -1,3 +1,34 @@
+/*const express = require('express');
+const mongoose = require('mongoose');
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+app.use(express.json());
+
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/SocialCircle APP', {
+  useFindAndModify: false,
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+// Use this to log mongo queries being executed!
+mongoose.set('debug', true);
+
+app.use(require('./routes'));
+
+app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));*/
+
+
+
+
+
+
+
+
+
+
 const express = require('express');
 const db = require('./config/connection');
 const routes = require('./routes');
@@ -14,3 +45,5 @@ db.once('open', () => {
     console.log(`API server running on port ${PORT}!`);
   });
 });
+
+

@@ -21,12 +21,12 @@ const thoughtController = {
     },
 
 
-    // create Thought
+   // create Thought
     createThought(req, res) {
         Thought.create(req.body)
             .then(thoughtData => {
                 return User.findOneAndUpdate(
-                    { _id: req.body.userId },
+                    { _id: req.body.thoughtnpmId },
                     { $push: { thoughts: thoughtData._id } },
                     { new: true }
                 )
@@ -36,6 +36,9 @@ const thoughtController = {
             })
             .catch(err => res.status(400).json(err));
     },
+
+    
+
 
 
     // update Thought
